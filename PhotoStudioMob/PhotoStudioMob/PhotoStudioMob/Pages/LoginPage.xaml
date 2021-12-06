@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhotoStudioMob.Pages.LoginPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource PrimaryColor1}">
+            <StackLayout>
+                <Image Source="logo.png" />
+                <Label Text="Авторизация" HorizontalOptions="Center" FontSize="Title"/>
+                <Label Text="Логин" FontSize="Medium" Margin="10,0,0,0"/>
+                <Entry x:Name="eLogin" Margin="10,0,10,0"/>
+                <Label Text="Пароль" FontSize="Medium" Margin="10,0,0,0"/>
+                <Entry x:Name="ePassword" Margin="10,0,10,0" IsPassword="True"/>
+                <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+                    <Label Text="Показать пароль"/>
+                    <Switch x:Name="showPasswordSwitch" Toggled="showPasswordSwitch_Toggled"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                    <Button x:Name="bLogin" Text="Войти" Clicked="bLogin_Clicked" Margin="0,0,10,0"/>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

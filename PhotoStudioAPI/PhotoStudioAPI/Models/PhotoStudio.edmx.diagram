@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6165616d7b244a1faa37047d3a5d79ab" Name="Diagram1">
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Client" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Photograph" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.PhotoSession" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.PhotoSessionRequisite" Width="1.5" PointX="7.5" PointY="2.25" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Requisite" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Skill" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Status" Width="1.5" PointX="3" PointY="14.75" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Studio" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="db_a74fb8_photostudioModel.Theme" Width="1.5" PointX="3" PointY="9.125" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSession_Client" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_Photograph_Skill" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSession_Photograph" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSession_Status" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSession_Studio" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSession_Theme" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_PhotoSessionRequisite_PhotoSession1" />
+        <AssociationConnector Association="db_a74fb8_photostudioModel.FK_OrderRequisite_Requisite" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

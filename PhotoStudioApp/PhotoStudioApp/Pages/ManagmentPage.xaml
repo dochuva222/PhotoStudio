@@ -1,0 +1,75 @@
+﻿<Page x:Class="PhotoStudioApp.Pages.ManagmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PhotoStudioApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagmentPage"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Управление" Margin="10,0,0,0" Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+        <TabControl Grid.Row="1" Margin="10">
+            <TabItem Header="Студии">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Button x:Name="bAddStudio" Content="Добавить" Click="bAddStudio_Click"/>
+                        <Button x:Name="bDeletesStudio" Content="Удалить" Click="bDeletesStudio_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="dgStudios"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              ColumnWidth="*"
+                              MouseDoubleClick="dgStudios_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" FontSize="15" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Цена" FontSize="15" Binding="{Binding Cost}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Реквизиты">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button x:Name="bAddRequisite" Content="Добавить" Click="bAddRequisite_Click"/>
+                        <Button x:Name="bDeleteRequisite" Content="Удалить" Click="bDeleteRequisite_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="dgRequisites"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              ColumnWidth="*"
+                              MouseDoubleClick="dgRequisites_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" FontSize="15" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Цена" FontSize="15" Binding="{Binding Cost}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Фотографы">
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Left">
+                        <Button x:Name="bAddPhotograph" Content="Добавить" Click="bAddPhotograph_Click"/>
+                        <Button x:Name="bDeletePhotograph" Content="Удалить" Click="bDeletePhotograph_Click"/>
+                    </StackPanel>
+                    <DataGrid x:Name="dgPhotographers"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          ColumnWidth="*"
+                              MouseDoubleClick="dgPhotographers_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ФИО" FontSize="15" Binding="{Binding FullName}"/>
+                            <DataGridTextColumn Header="Квалификация" FontSize="15" Binding="{Binding Skill.Name}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

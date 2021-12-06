@@ -1,0 +1,130 @@
+﻿<Page x:Class="PhotoStudioApp.Pages.PhotoSessionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PhotoStudioApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PhotoSessionPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.RowSpan="2"
+                   Text="Запись на фотосессию"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+        <ScrollViewer Grid.Row="1" Margin="10">
+            <StackPanel>
+                <StackPanel x:Name="spPhotoSessionInfo">
+                    <TextBlock Text="Дата" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <DatePicker x:Name="dpDate" SelectedDateChanged="dpDate_SelectedDateChanged" SelectedDate="{Binding PhotoSessionDate}" FontSize="20"/>
+                    <TextBlock Text="Время" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <ComboBox x:Name="cbTimes" SelectionChanged="cbTimes_SelectionChanged" FontSize="20"/>
+                    <TextBlock Text="Клиент" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <ComboBox x:Name="cbClients"
+                          IsEditable="True"
+                          IsTextSearchEnabled="True"
+                          SelectedItem="{Binding Client}"
+                          DisplayMemberPath="FullName"
+                          FontSize="20"/>
+                    <TextBlock Text="Тема фотосессии" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <ComboBox x:Name="cbThemes"
+                          IsEditable="True" IsTextSearchEnabled="True"
+                          SelectedItem="{Binding Theme}"
+                          DisplayMemberPath="Name"
+                          FontSize="20"/>
+                    <TextBlock Text="Фотограф" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <ComboBox x:Name="cbPhotographers"
+                          IsEditable="True" IsTextSearchEnabled="True"
+                          SelectedItem="{Binding Photograph}"
+                          DisplayMemberPath="FullNameSkill"
+                          FontSize="20"/>
+                    <TextBlock Text="Место фотосессии" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="rbInStudio"
+                                 GroupName="photoSessionLocation"
+                                 Checked="rbInStudio_Checked"
+                                 Content="В студии"
+                                 FontSize="20" Margin="0,0,5,0"/>
+                        <RadioButton x:Name="rbOutStudio"
+                                 GroupName="photoSessionLocation"
+                                 Checked="rbOutStudio_Checked"
+                                 Content="Вне студии"
+                                 FontSize="20" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel x:Name="spStudio">
+                        <TextBlock Text="Студия" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                        <ComboBox x:Name="cbStudios"
+                              IsEditable="True" IsTextSearchEnabled="True"
+                              SelectedItem="{Binding Studio}"
+                              DisplayMemberPath="Name" FontSize="20"/>
+                    </StackPanel>
+                    <StackPanel x:Name="spAddress" Visibility="Collapsed">
+                        <TextBlock Text="Адрес" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                        <TextBox x:Name="tbAdress" Text="{Binding Address}" FontSize="20"/>
+                    </StackPanel>
+                    <TextBlock Text="Комментарии" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                    <TextBox Text="{Binding Comment}" TextWrapping="Wrap" AcceptsReturn="True" FontSize="20" Height="200"/>
+                    <Button x:Name="bSave" Content="Сохранить" Click="bSave_Click"/>
+                </StackPanel>
+                <Button x:Name="bBack" Content="Назад" Click="bBack_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DockPanel x:Name="dpRequisites">
+                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,20">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Реквизит: " Padding="0,5,0,0" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                        <ComboBox x:Name="cbRequisites"
+                              DisplayMemberPath="Name"
+                              Width="200"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              FontSize="20"/>
+                        <Button x:Name="bAddRequisite" Margin="15,0,0,0" Content="Добавить" Click="bAddRequisite_Click"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Количество: " Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                        <TextBox x:Name="tbAmount" Padding="0,1,0,0" FontSize="20" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <DataGrid x:Name="dgRequisites" Margin="0,0,10,10" IsReadOnly="True" AutoGenerateColumns="False" ColumnWidth="*" ItemsSource="{Binding PhotoSessionRequisite}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Название" FontSize="15" Binding="{Binding Requisite.Name}"/>
+                        <DataGridTextColumn Header="Количество" FontSize="15" Binding="{Binding Amount}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="bDeleteRequisite" Content="Удалить" Click="bDeleteRequisite_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Row="1">
+                <TextBlock  Text="Превью" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                    <StackPanel x:Name="spPreviews" Orientation="Horizontal">
+                        
+                    </StackPanel>
+                </ScrollViewer>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PhotoStudioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Middlename" Type="nvarchar" MaxLength="50" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photograph">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Middlename" Type="nvarchar" MaxLength="50" />
+          <Property Name="SkillId" Type="int" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="PhotoSessionDate" Type="date" Nullable="false" />
+          <Property Name="PhotographId" Type="int" Nullable="false" />
+          <Property Name="StudioId" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="ThemeId" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="500" />
+          <Property Name="PhotoSessionTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="Catalog" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PhotoSessionRequisite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoSessionId" Type="int" Nullable="false" />
+          <Property Name="RequisiteId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requisite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Image" Type="image" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Studio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Image" Type="image" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OrderRequisite_Requisite">
+          <End Role="Requisite" Type="Self.Requisite" Multiplicity="1" />
+          <End Role="PhotoSessionRequisite" Type="Self.PhotoSessionRequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSessionRequisite">
+              <PropertyRef Name="RequisiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photograph_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="Photograph" Type="Self.Photograph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photograph">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Photograph">
+          <End Role="Photograph" Type="Self.Photograph" Multiplicity="1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photograph">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="PhotographId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Studio">
+          <End Role="Studio" Type="Self.Studio" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Studio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="StudioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="ThemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSessionRequisite_PhotoSession1">
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PhotoSessionRequisite" Type="Self.PhotoSessionRequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhotoSession">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSessionRequisite">
+              <PropertyRef Name="PhotoSessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhotoStudioModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Photograph" EntityType="Self.Photograph" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoSession" EntityType="Self.PhotoSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoSessionRequisite" EntityType="Self.PhotoSessionRequisite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisite" EntityType="Self.Requisite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Studio" EntityType="Self.Studio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Theme" EntityType="Self.Theme" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OrderRequisite_Requisite" Association="Self.FK_OrderRequisite_Requisite">
+            <End Role="Requisite" EntitySet="Requisite" />
+            <End Role="PhotoSessionRequisite" EntitySet="PhotoSessionRequisite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photograph_Skill" Association="Self.FK_Photograph_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="Photograph" EntitySet="Photograph" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Client" Association="Self.FK_PhotoSession_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Photograph" Association="Self.FK_PhotoSession_Photograph">
+            <End Role="Photograph" EntitySet="Photograph" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Status" Association="Self.FK_PhotoSession_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Studio" Association="Self.FK_PhotoSession_Studio">
+            <End Role="Studio" EntitySet="Studio" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Theme" Association="Self.FK_PhotoSession_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSessionRequisite_PhotoSession1" Association="Self.FK_PhotoSessionRequisite_PhotoSession1">
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+            <End Role="PhotoSessionRequisite" EntitySet="PhotoSessionRequisite" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhotoStudioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middlename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSession_Client" FromRole="Client" ToRole="PhotoSession" />
+        </EntityType>
+        <EntityType Name="Photograph">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Middlename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SkillId" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="Self.FK_Photograph_Skill" FromRole="Photograph" ToRole="Skill" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSession_Photograph" FromRole="Photograph" ToRole="PhotoSession" />
+        </EntityType>
+        <EntityType Name="PhotoSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PhotoSessionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PhotographId" Type="Int32" Nullable="false" />
+          <Property Name="StudioId" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ThemeId" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoSessionTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="Catalog" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_PhotoSession_Client" FromRole="PhotoSession" ToRole="Client" />
+          <NavigationProperty Name="Photograph" Relationship="Self.FK_PhotoSession_Photograph" FromRole="PhotoSession" ToRole="Photograph" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_PhotoSession_Status" FromRole="PhotoSession" ToRole="Status" />
+          <NavigationProperty Name="Studio" Relationship="Self.FK_PhotoSession_Studio" FromRole="PhotoSession" ToRole="Studio" />
+          <NavigationProperty Name="Theme" Relationship="Self.FK_PhotoSession_Theme" FromRole="PhotoSession" ToRole="Theme" />
+          <NavigationProperty Name="PhotoSessionRequisite" Relationship="Self.FK_PhotoSessionRequisite_PhotoSession1" FromRole="PhotoSession" ToRole="PhotoSessionRequisite" />
+        </EntityType>
+        <EntityType Name="PhotoSessionRequisite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoSessionId" Type="Int32" Nullable="false" />
+          <Property Name="RequisiteId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSessionRequisite_PhotoSession1" FromRole="PhotoSessionRequisite" ToRole="PhotoSession" />
+          <NavigationProperty Name="Requisite" Relationship="Self.FK_OrderRequisite_Requisite" FromRole="PhotoSessionRequisite" ToRole="Requisite" />
+        </EntityType>
+        <EntityType Name="Requisite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="PhotoSessionRequisite" Relationship="Self.FK_OrderRequisite_Requisite" FromRole="Requisite" ToRole="PhotoSessionRequisite" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Photograph" Relationship="Self.FK_Photograph_Skill" FromRole="Skill" ToRole="Photograph" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSession_Status" FromRole="Status" ToRole="PhotoSession" />
+        </EntityType>
+        <EntityType Name="Studio">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSession_Studio" FromRole="Studio" ToRole="PhotoSession" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Theme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PhotoSession" Relationship="Self.FK_PhotoSession_Theme" FromRole="Theme" ToRole="PhotoSession" />
+        </EntityType>
+        <Association Name="FK_PhotoSession_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photograph_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+          <End Role="Photograph" Type="Self.Photograph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Photograph">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Photograph">
+          <End Role="Photograph" Type="Self.Photograph" Multiplicity="1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photograph">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="PhotographId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Studio">
+          <End Role="Studio" Type="Self.Studio" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Studio">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="StudioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSession_Theme">
+          <End Role="Theme" Type="Self.Theme" Multiplicity="0..1" />
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Theme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSession">
+              <PropertyRef Name="ThemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoSessionRequisite_PhotoSession1">
+          <End Role="PhotoSession" Type="Self.PhotoSession" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PhotoSessionRequisite" Type="Self.PhotoSessionRequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhotoSession">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSessionRequisite">
+              <PropertyRef Name="PhotoSessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderRequisite_Requisite">
+          <End Role="Requisite" Type="Self.Requisite" Multiplicity="1" />
+          <End Role="PhotoSessionRequisite" Type="Self.PhotoSessionRequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoSessionRequisite">
+              <PropertyRef Name="RequisiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhotoStudioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Photograph" EntityType="Self.Photograph" />
+          <EntitySet Name="PhotoSession" EntityType="Self.PhotoSession" />
+          <EntitySet Name="PhotoSessionRequisite" EntityType="Self.PhotoSessionRequisite" />
+          <EntitySet Name="Requisite" EntityType="Self.Requisite" />
+          <EntitySet Name="Skill" EntityType="Self.Skill" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="Studio" EntityType="Self.Studio" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Theme" EntityType="Self.Theme" />
+          <AssociationSet Name="FK_PhotoSession_Client" Association="Self.FK_PhotoSession_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photograph_Skill" Association="Self.FK_Photograph_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="Photograph" EntitySet="Photograph" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Photograph" Association="Self.FK_PhotoSession_Photograph">
+            <End Role="Photograph" EntitySet="Photograph" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Status" Association="Self.FK_PhotoSession_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Studio" Association="Self.FK_PhotoSession_Studio">
+            <End Role="Studio" EntitySet="Studio" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSession_Theme" Association="Self.FK_PhotoSession_Theme">
+            <End Role="Theme" EntitySet="Theme" />
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoSessionRequisite_PhotoSession1" Association="Self.FK_PhotoSessionRequisite_PhotoSession1">
+            <End Role="PhotoSession" EntitySet="PhotoSession" />
+            <End Role="PhotoSessionRequisite" EntitySet="PhotoSessionRequisite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderRequisite_Requisite" Association="Self.FK_OrderRequisite_Requisite">
+            <End Role="Requisite" EntitySet="Requisite" />
+            <End Role="PhotoSessionRequisite" EntitySet="PhotoSessionRequisite" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhotoStudioModelStoreContainer" CdmEntityContainer="PhotoStudioEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photograph">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Photograph">
+              <MappingFragment StoreEntitySet="Photograph">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoSession">
+            <EntityTypeMapping TypeName="PhotoStudioModel.PhotoSession">
+              <MappingFragment StoreEntitySet="PhotoSession">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PhotoSessionDate" ColumnName="PhotoSessionDate" />
+                <ScalarProperty Name="PhotographId" ColumnName="PhotographId" />
+                <ScalarProperty Name="StudioId" ColumnName="StudioId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ThemeId" ColumnName="ThemeId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="PhotoSessionTime" ColumnName="PhotoSessionTime" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoSessionRequisite">
+            <EntityTypeMapping TypeName="PhotoStudioModel.PhotoSessionRequisite">
+              <MappingFragment StoreEntitySet="PhotoSessionRequisite">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PhotoSessionId" ColumnName="PhotoSessionId" />
+                <ScalarProperty Name="RequisiteId" ColumnName="RequisiteId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisite">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Requisite">
+              <MappingFragment StoreEntitySet="Requisite">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skill">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Skill">
+              <MappingFragment StoreEntitySet="Skill">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Studio">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Studio">
+              <MappingFragment StoreEntitySet="Studio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PhotoStudioModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Theme">
+            <EntityTypeMapping TypeName="PhotoStudioModel.Theme">
+              <MappingFragment StoreEntitySet="Theme">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

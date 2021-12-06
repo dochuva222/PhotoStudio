@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:calendar="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             x:Class="PhotoStudioMob.Pages.MainPage"
+             NavigationPage.HasBackButton="False"
+             Title="Календарь фотосессий">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Профиль" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource PrimaryColor1}">
+            <RefreshView x:Name="refreshView" Refreshing="refreshView_Refreshing" >
+                <StackLayout>
+                    <calendar:Calendar x:Name="photoSessionsCalendar" Margin="10" ArrowsColor="{StaticResource PrimaryColor1}"
+                                       YearLabelColor="{StaticResource PrimaryFontColor}" MonthLabelColor="{StaticResource PrimaryFontColor}"
+                                       DaysTitleColor="{StaticResource PrimaryFontColor}" SelectedDateColor="{StaticResource PrimaryFontColor}"
+                                       SelectedDayBackgroundColor="{StaticResource PrimaryColor2}" 
+                                       TodayOutlineColor="{StaticResource PrimaryColor2}" >
+                        <calendar:Calendar.EventTemplate>
+                            <DataTemplate>
+                                <StackLayout Margin="5">
+                                    <Label Text="{Binding Client.FullName, StringFormat='Клиент: {0}'}"/>
+                                    <StackLayout x:Name="slClientContacts" IsVisible="false">
+                                        <StackLayout.Style>
+                                            <Style TargetType="StackLayout">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="StackLayout" Binding="{Binding StatusId}" Value="1">
+                                                        <Setter Property="IsVisible" Value="true"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackLayout.Style>
+                                        <Label Text="{Binding Client.Phone, StringFormat='Телефон: {0}'}"/>
+                                        <Label Text="{Binding Client.Email, StringFormat='Email: {0}'}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding PhotoSessionTime, StringFormat='Время: {0:hh\\:mm}'}"/>
+                                    <Label Text="{Binding Place}"/>
+                                    <Label Text="{Binding Theme.Name, StringFormat='Тема: {0}'}"/>
+                                    <Button x:Name="bAccept" Text="Принять" Clicked="bAccept_Clicked">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Button" Binding="{Binding StatusId}" Value="1">
+                                                        <Setter Property="IsVisible" Value="false"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button x:Name="bDelete" Text="Отказаться" Clicked="bDelete_Clicked">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Button" Binding="{Binding StatusId}" Value="1">
+                                                        <Setter Property="IsVisible" Value="false"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                    <Button x:Name="bFinish" Text="Завершить" Clicked="bFinish_Clicked" IsVisible="false">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Button" Binding="{Binding StatusId}" Value="1">
+                                                        <Setter Property="IsVisible" Value="true"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackLayout>
+                            </DataTemplate>
+                        </calendar:Calendar.EventTemplate>
+                    </calendar:Calendar>
+                    <Button x:Name="bRefresh" Text="Обновить" Clicked="bRefresh_Clicked"/>
+                </StackLayout>
+            </RefreshView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

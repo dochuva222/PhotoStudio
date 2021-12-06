@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhotoStudioMob.Pages.ProfilePage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="Профиль">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Фотосессии" Clicked="toPhotoSessions"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource PrimaryColor1}">
+            <ScrollView>
+                <StackLayout Margin="0,10,0,0">
+                    <Frame CornerRadius="600" IsClippedToBounds="True" HorizontalOptions="CenterAndExpand" Padding="0" HeightRequest="200" WidthRequest="200" >
+                        <Image Source="{Binding PhotographImage}" Aspect="AspectFit"/>
+                    </Frame>
+                    <Label Text="{Binding FullName}" FontSize="Medium" Margin="13,0,0,0" HorizontalOptions="Center"/>
+                    <Label Text="{Binding Login, StringFormat='Логин: {0}'}" FontSize="Medium" Margin="13,0,0,0"/>
+                    <Label Text="Пароль: " FontSize="Medium" Margin="13,0,0,0"/>
+                    <Entry x:Name="ePassword" FontSize="Medium" Margin="10,0,10,0"/>
+                    <Button x:Name="bSave" Text="Сохранить изменения" Clicked="bSave_Clicked" Margin="10,0,10,0"/>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

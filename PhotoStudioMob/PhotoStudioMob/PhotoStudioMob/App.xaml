@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PhotoStudioMob.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="TitleFontColor">white</Color>
+            <Color x:Key="PrimaryFontColor">white</Color>
+            <Color x:Key="ButtonFontColor">white</Color>
+            <Color x:Key="PrimaryColor1">#FF9370DB</Color>
+            <Color x:Key="PrimaryColor2">#FFFF8A50</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="NavigationPage.BarBackgroundColor" Value="{StaticResource PrimaryColor2}"/>
+            </Style>
+            <Style TargetType="Label" >
+                <Setter Property="TextColor" Value="{StaticResource PrimaryFontColor}"/>
+            </Style>
+            <Style TargetType="Entry" >
+                <Setter Property="TextColor" Value="{StaticResource PrimaryFontColor}"/>
+            </Style>
+            <Style TargetType="Editor" >
+                <Setter Property="TextColor" Value="{StaticResource PrimaryFontColor}"/>
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource ButtonFontColor}"/>
+                <Setter Property="CornerRadius" Value="50"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor2}"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

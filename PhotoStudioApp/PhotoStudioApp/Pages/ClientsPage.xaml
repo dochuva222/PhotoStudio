@@ -1,0 +1,49 @@
+﻿<Page x:Class="PhotoStudioApp.Pages.ClientsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PhotoStudioApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ClientsPage"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Клиенты" Margin="10,0,0,0" Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
+        <DockPanel Grid.Row="1">
+            <StackPanel DockPanel.Dock="Top" Margin="10,-6,0,0">
+                <StackPanel>
+                    <Button x:Name="bAddClient" Content="Добавить клиента" Click="bAddClient_Click"/>
+                </StackPanel>
+            </StackPanel>
+            <DataGrid x:Name="dgClients"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      ColumnWidth="*"
+                      MouseDoubleClick="dgClients_MouseDoubleClick"
+                      Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ФИО" FontSize="15" Binding="{Binding FullName}"/>
+                    <DataGridTextColumn Header="Кол-во фотосессий" FontSize="15" Binding="{Binding OrdersCount}"/>
+                    <DataGridTextColumn Header="Скидка" FontSize="15" Binding="{Binding Discount, StringFormat={}{0}%}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        <StackPanel Grid.Column="1" Margin="10" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="ФИО: " Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                <TextBox x:Name="tbSearch" FontSize="20" Width="150" TextChanged="tbSearch_TextChanged"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>
